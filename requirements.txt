@@ -1,0 +1,7 @@
+django
+social-auth-app-django
+configparser
+gunicorn
+daphne
+channels
+jsonfield
