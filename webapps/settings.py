@@ -18,7 +18,7 @@ from configparser import ConfigParser
 BASE_DIR = Path(__file__).resolve().parent.parent
 print(BASE_DIR)
 CONFIG = ConfigParser()
-CONFIG.read(BASE_DIR / "config.ini.sample")
+CONFIG.read(BASE_DIR / "config.ini")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
