@@ -5,3 +5,4 @@ gunicorn
 daphne
 channels
 jsonfield
+python-decouple
