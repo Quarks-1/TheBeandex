@@ -11,3 +11,4 @@ images
 !**/migrations/__init__.py
 **/migrations/*
 **/__pycache__/**
+.env
