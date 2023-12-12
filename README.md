@@ -5,10 +5,6 @@ Welcome to The Beandex, a Django web application that serves as a centralized an
 ## Table of Contents
 
 - [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -21,4 +17,3 @@ Welcome to The Beandex, a Django web application that serves as a centralized an
 - **Responsive Design:** Accessible from various devices, including desktops, tablets, and mobile phones.
 
 - **Authentication:** Google OAuth2 for ease of access and security
-
