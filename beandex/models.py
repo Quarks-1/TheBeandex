@@ -33,7 +33,7 @@ class BrewMethod(models.Model):
     brew_type = models.CharField(max_length=2, choices=BrewType.choices, default=BrewType.OTHER)
     
     
-class GrindProfile(models.Model):
+class BrewProfile(models.Model):
                         #### Basic Info ###
     creator = models.ForeignKey(User, on_delete=models.PROTECT)
     creation_date = models.DateTimeField(default=timezone.now)
@@ -62,10 +62,10 @@ class GrindProfile(models.Model):
 class Profile(models.Model):
     # Basic Info
     user = models.OneToOneField(User, on_delete=models.PROTECT)
-    join_date = models.DateTimeField()
+    join_date = models.DateTimeField(default=timezone.now)
     picture = models.FileField(blank=True)
     # User Profiles
-    grind_profiles = models.ManyToManyField(GrindProfile, related_name='grind_profiles')
+    grind_profiles = models.ManyToManyField(BrewProfile, related_name='grind_profiles')
     # Profile Stats
     total_beans = models.BigIntegerField(default=0)
     
@@ -78,4 +78,3 @@ def create_profile(sender, user, request, **kwargs):
     if 'picture' not in request.session:
         request.session['picture'] = request.user.social_auth.get(provider='google-oauth2').extra_data['picture']
 
-    
