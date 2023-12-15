@@ -4,6 +4,7 @@ from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.contrib.postgres.fields import ArrayField
 
 
 
@@ -45,7 +46,7 @@ class BrewProfile(models.Model):
     grinder = models.ForeignKey(Grinder, on_delete=models.PROTECT)
     burr = models.ForeignKey(Burr, on_delete=models.PROTECT)
     burr_seaoned = models.BooleanField(default=False)
-    steps = models.CharField(max_length=2000) # String of comma separated values
+    steps = ArrayField(models.CharField(max_length=200)) # Array of steps
     grinder_rpm = models.PositiveBigIntegerField(default=0)
     grind_size = models.PositiveBigIntegerField(default=0)
     grind_weight = models.PositiveBigIntegerField(default=0)
@@ -54,9 +55,12 @@ class BrewProfile(models.Model):
     water_temp = models.PositiveBigIntegerField(default=0)
     # Method
     brew_method = models.ForeignKey(BrewMethod, on_delete=models.PROTECT)
+    brew_machine = models.CharField(max_length=100, default='None')
     
                         #### Rating Parameters ###
     personal_rating = models.PositiveSmallIntegerField(default=0, validators=[MaxValueValidator(10), MinValueValidator(0)])
+    
+    # Public vote count
     votes = models.BigIntegerField(default=0)
     
 class Profile(models.Model):
@@ -72,6 +76,9 @@ class Profile(models.Model):
     
 @receiver(user_logged_in)
 def create_profile(sender, user, request, **kwargs):
+    # Check if user is not admin
+    if user.is_superuser:
+        return
     if not Profile.objects.filter(user=user).exists():
         pic = request.user.social_auth.get(provider='google-oauth2').extra_data['picture']
         Profile.objects.get_or_create(user=user, join_date=timezone.now(), picture=pic)
